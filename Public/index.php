@@ -1,20 +1,23 @@
 <?php
 
+// Start session
 session_start();
-require __DIR__ . "/../App/Core/Router/router.php";
 
-
-// 2. Include core classes globally
-require_once __DIR__ . '/../app/Core/Auth.php';
-
+define('BASE_PATH', dirname(__DIR__));
 spl_autoload_register(function ($class) {
-    $path = str_replace('\\', '/', $class) . '.php';
-    if (file_exists(__DIR__ . '/../' . $path)) {
-        require_once __DIR__ . '/../' . $path;
+    $classPath = str_replace('\\', '/', $class);
+    $file = BASE_PATH . '/' . $classPath . '.php';
+
+    if (file_exists($file)) {
+        require_once $file;
     }
 });
 
+require_once BASE_PATH . '/App/Core/Router/router.php';
+
+// Get current URI and route
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
+// Route the request
 route($uri);
 

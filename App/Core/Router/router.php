@@ -1,17 +1,23 @@
 <?php
 
-function route($uri) {
-    
+function route($uri)
+{
+
     $routes = [
-        '/'                => ['UserController', 'index'],
-        '/about'           => ['UserController', 'about'],
-        '/account'         => ['UserController', 'account'],
-        '/login'           => ['AuthController', 'login'],
-        '/register'        => ['AuthController', 'register'],
-        '/logout'          => ['AuthController', 'logout'],
-        '/adminhome'            => ['AdminController', 'dashboard'],
+        '/'                      => ['ReaderController', 'index'],
+        '/about'                 => ['ReaderController', 'about'],
+        '/borrow'                => ['ReaderController', 'borrow'],
+        '/history'                => ['ReaderController', 'history'],
+        '/profile'                => ['ReaderController', 'profile'],
+        '/return'                 => ['ReaderController', 'return'],
+        '/login'                 => ['AuthController', 'login'],
+        '/register'              => ['AuthController', 'register'],
+        '/logout'                => ['AuthController', 'logout'],
+        '/adminhome'             => ['AdminController', 'dashboard'],
         '/admin/books'           => ['AdminController', 'books'],
-        '/admin/members'         => ['AdminController', 'members']
+        '/admin/members'         => ['AdminController', 'members'],
+        '/admin/members/delete'  => ['AdminController', 'deleteMembers'],
+        '/admin/books/delete'    => ['AdminController', 'deleteBook'],
     ];
 
     if (isset($routes[$uri])) {

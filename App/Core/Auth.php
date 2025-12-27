@@ -1,4 +1,6 @@
 <?php
+namespace App\Core;
+use Config\Database;
 class Auth {
     public static function requireLogin() {
         // enable the session if there is no session
@@ -19,20 +21,25 @@ class Auth {
         return isset($_SESSION['user_id']);
     }
 
-    public static function requireAdmin($mysqli) {
-        // First, they must be logged in
-        self::requireLogin();
-
-        // Fetch user role from database
+    public static function requireAdmin() {
+    self::requireLogin();
+    try {
+        $pdo = Database::getConnection();
         $sql = "SELECT role FROM users WHERE id = ?";
-        $stmt = $mysqli->prepare($sql);
-        $stmt->bind_param("i", $_SESSION['user_id']);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $user = $result->fetch_assoc();
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$_SESSION['user_id']]);
+        
+        $user = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+        // 4. If not found or not admin, kick them out
         if (!$user || $user['role'] !== 'admin') {
             header("Location: /");
             exit();
         }
+    } catch (\PDOException $e) {
+        // Log error and redirect
+        header("Location: /");
+        exit();
     }
+}
 }

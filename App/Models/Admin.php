@@ -1,38 +1,52 @@
 <?php
 
-namespace Models;
+namespace App\Models;
+
+use Config\Database;
 
 use PDO;
 use Exception;
 
-class Admin extends User {
-    public function __construct($id, $fullName, $email, $password, $role) {
+class Admin extends User
+{
+    public function __construct($id, $fullName, $email, $password, $role)
+    {
         parent::__construct($fullName, $email, $password, $role, $id);
     }
 
-    
-    // Function to add a new book to the database
-    
-    public function addBook(PDO $db, $title, $author,$year, $description, $status) {
-        try {
-            // 1. Prepare the SQL statement
-            $sql = "INSERT INTO books (title, author,year, description, status) 
-                    VALUES (:title, :author,:year,  :description,:status )";
-            
-            $stmt = $db->prepare($sql);
 
-            // 2. Execute with sanitized data to prevent SQL Injection
-            return $stmt->execute([
-                ':title' => $title,
-                ':author' => $author,
-                ':year' => $year,
-                ':description' => $description,
-                ':status' => $status
-            ]);
-            
-        } catch (\PDOException $e) {
-            // Log error or throw exception
-            throw new Exception("Error adding book: " . $e->getMessage());
-        }
+    /**
+     * Get all registered members (excluding admins)
+     */
+    public static function getAllMembers()
+    {
+        $pdo = Database::getConnection();
+        $stmt = $pdo->prepare("SELECT id, full_name, email, role FROM users WHERE role = 'reader'");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Remove a member from the system
+     */
+    public static function deleteMember($userId)
+    {
+        $pdo = Database::getConnection();
+        $stmt = $pdo->prepare("DELETE FROM users WHERE id = ? AND role != 'admin'");
+        return $stmt->execute([$userId]);
+    }
+    /**
+     * Get totals for the admin dashboard
+     */
+    public static function getDashboardStats()
+    {
+        $pdo = \Config\Database::getConnection();
+
+        $stats = [];
+        $stats['total_books'] = $pdo->query("SELECT COUNT(*) FROM books")->fetchColumn();
+        $stats['total_users'] = $pdo->query("SELECT COUNT(*) FROM users WHERE role = 'user'")->fetchColumn();
+        // Example: $stats['active_borrows'] = $pdo->query("SELECT COUNT(*) FROM borrows WHERE status = 'active'")->fetchColumn();
+
+        return $stats;
     }
 }

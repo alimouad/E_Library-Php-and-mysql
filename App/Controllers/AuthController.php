@@ -2,8 +2,7 @@
 
 namespace App\Controllers;
 
-use Models\User;
-use Exception;
+use App\Models\User;
 
 class AuthController
 {
@@ -19,24 +18,20 @@ class AuthController
         ];
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $fullName  = trim($_POST['lastname'] ?? '');
-            $email     = trim($_POST['email'] ?? '');
-            $password  = $_POST['password'] ?? '';
-
-            $data['fullName'] = $fullName;
-            $data['email']    = $email;
+            // Keep fullname as a single variable to match your Model's signature
+            $data['fullName'] = trim($_POST['name'] ?? '');
+            $data['email']    = trim($_POST['email'] ?? '');
+            $password         = $_POST['password'] ?? '';
 
             $data['errors'] = $this->validateRegister($_POST);
 
             if (empty($data['errors'])) {
-                // The Model's register method handles Database::getConnection() internally now
-                $result = User::register($fullName, $email, $password);
+                $result = User::register($data['fullName'], $data['email'], $password);
 
                 if (empty($result)) {
                     header('Location: /login');
                     exit;
                 } else {
-                    // result contains the error array from the Model
                     $data['errors'] = $result;
                 }
             }
@@ -59,20 +54,19 @@ class AuthController
         ];
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $email    = trim($_POST['email'] ?? '');
+            $data['email'] = trim($_POST['email'] ?? '');
             $password = $_POST['password'] ?? '';
 
-            $data['email'] = $email;
             $data['errors'] = $this->validateLogin($_POST);
 
             if (empty($data['errors'])) {
-
-                $user = User::login($email, $password);
+                $user = User::login($data['email'], $password);
 
                 if ($user) {
-                    // Redirect based on the role property of the returned User object
-                   
-                    header("Location:/");
+                    // Determine redirect path based on the object's role
+                    $redirect = ($user->getRole() === 'admin') ? '/adminhome' : '/';
+
+                    header("Location: $redirect");
                     exit;
                 } else {
                     $data['errors']['LoginErr'] = 'Invalid email or password';
@@ -82,7 +76,7 @@ class AuthController
 
         $this->render('Auth/login', [
             'title' => 'Sign In',
-            'data'  => $data
+            'data'  => $data,
         ]);
     }
 
@@ -98,9 +92,11 @@ class AuthController
     private function validateRegister(array $post): array
     {
         $errors = [];
-        if (empty($post['firstname'])) $errors['FirstErr'] = 'First name is required';
-        if (empty($post['lastname']))  $errors['LastErr']  = 'Last name is required';
-        
+        // Validating against 'fullname' to match your form/model preference
+        if (empty($post['name'])) {
+            $errors['NameErr'] = 'Full name is required';
+        }
+
         if (empty($post['email']) || !filter_var($post['email'], FILTER_VALIDATE_EMAIL)) {
             $errors['EmailErr'] = 'Valid email is required';
         }
@@ -119,15 +115,26 @@ class AuthController
         return $errors;
     }
 
-    protected function render(string $view, array $data = []): void
+    protected function render(string $view, array $data = [], string $layout = 'auth'): void
     {
         extract($data);
-        // Path adjusted: assuming AuthController is in App/Controllers/
-        $viewFile = __DIR__ . '/../../Views/' . $view . '.php';
-        
+
+        $viewFile = __DIR__ . '/../Views/' . $view . '.php';
+
         if (!file_exists($viewFile)) {
             die("View not found: {$viewFile}");
         }
+
+        ob_start();
         require $viewFile;
+        $content = ob_get_clean();
+        $layoutFile = __DIR__ . '/../Layout/' . $layout . '.php';
+
+        if (file_exists($layoutFile)) {
+            require $layoutFile;
+        } else {
+
+            echo $content;
+        }
     }
 }
