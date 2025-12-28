@@ -9,9 +9,9 @@
                     <p class="text-[#4c739a] dark:text-slate-400 text-base font-normal leading-normal">Please sign in to your library account.</p>
                 </div>
 
-                <?php if (isset($data['errors']['DatabaseErr'])): ?>
+                <?php if (isset($data['errors']['LoginErr'])): ?>
                     <div class="mb-4 p-3 rounded bg-red-50 text-red-700 text-sm border border-red-200">
-                        <?= htmlspecialchars($data['errors']['DatabaseErr']); ?>
+                        <?= htmlspecialchars($data['errors']['LoginErr']); ?>
                     </div>
                 <?php endif; ?>
                 <!-- Form -->
@@ -20,6 +20,9 @@
                     <label class="flex flex-col w-full">
                         <p class="text-[#0d141b] dark:text-slate-200 text-sm font-medium leading-normal pb-2">Email Address</p>
                         <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-slate-600 bg-slate-50 dark:bg-slate-800 focus:border-primary h-12 placeholder:text-[#97aab9] p-[15px] text-base font-normal leading-normal transition-all" placeholder="user@library.com" type="email" name="email" value="" />
+                        <?php if (isset($data['errors']['EmailErr'])): ?>
+                        <p class="text-red-500 text-xs mt-1"><?= htmlspecialchars($data['errors']['EmailErr']) ?></p>
+                    <?php endif; ?>
                     </label>
                     <!-- Password Input -->
                     <label class="flex flex-col w-full">
@@ -32,6 +35,9 @@
                                 <span class="material-symbols-outlined !text-[20px]">visibility</span>
                             </button>
                         </div>
+                        <?php if (isset($data['errors']['PasswordErr'])): ?>
+                        <p class="text-red-500 text-xs mt-1"><?= htmlspecialchars($data['errors']['PasswordErr']) ?></p>
+                    <?php endif; ?>
                     </label>
                     <!-- Submit Button -->
                     <button class="mt-2 flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-4 bg-primary hover:bg-blue-600 text-white text-base font-bold leading-normal tracking-[0.015em] transition-colors shadow-sm" type="submit">

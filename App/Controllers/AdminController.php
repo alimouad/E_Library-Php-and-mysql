@@ -9,13 +9,16 @@ use Exception;
 
 class AdminController
 {
-    public function dashboard()
-    { 
-        Auth::requireAdmin();
-        $this->render('Admin/home_admin', [
-            'title' => 'Admin Dashboard'
-        ]);
-    }
+   public function dashboard() {
+    Auth::requireAdmin(); 
+    
+    $stats = Admin::getDashboardStats();
+
+    $this->render('Admin/home_admin', [
+        'title' => 'Admin Dashboard',
+        'stats' => $stats
+    ]);
+}
 
     public function books()
     {

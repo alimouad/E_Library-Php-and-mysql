@@ -58,7 +58,7 @@ class AuthController
             $password = $_POST['password'] ?? '';
 
             $data['errors'] = $this->validateLogin($_POST);
-
+            
             if (empty($data['errors'])) {
                 $user = User::login($data['email'], $password);
 
@@ -83,7 +83,7 @@ class AuthController
     public function logout()
     {
         User::logout();
-        header('Location: /login');
+        
         exit;
     }
 

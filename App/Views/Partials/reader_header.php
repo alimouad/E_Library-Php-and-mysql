@@ -17,7 +17,7 @@
 
                     <?php $isActive = ($current === '/'); ?>
                     <a href="/"
-                        class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors
+                        class="inline-flex items-center px-1 pt-1 border-b-2 text-md font-medium transition-colors
        <?= $isActive
             ? 'border-primary text-primary'
             : 'border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200' ?>"
@@ -27,7 +27,7 @@
 
                     <?php $isActive = ($current === '/history'); ?>
                     <a href="/history"
-                        class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors
+                        class="inline-flex items-center px-1 pt-1 border-b-2 text-md font-medium transition-colors
        <?= $isActive
             ? 'border-primary text-primary'
             : 'border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200' ?>"
@@ -35,25 +35,27 @@
                         History
                     </a>
 
-                    <?php $isActive = ($current === '/profile'); ?>
-                    <a href="/profile"
-                        class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors
-       <?= $isActive
-            ? 'border-primary text-primary'
-            : 'border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200' ?>"
-                        <?= $isActive ? 'aria-current="page"' : '' ?>>
-                        Profile
-                    </a>
+
 
                 </nav>
                 <div class="flex items-center">
                     <div class="flex-shrink-0">
                         <div class="relative flex items-center gap-2">
-                            <img alt="Librarian Profile" class="h-8 w-8 rounded-full object-cover border border-slate-200 dark:border-slate-700" data-alt="Female librarian portrait smiling" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBb7uHxcBfHO05IEbv7NXJOLb5Ba1EZs6y6sGJgdQnnx9qrGzxi3evyU3E3RJPjQs5njWecEvp4ucsEi2BBipW8i_fdiD5iLV0MjpZ1lmulUOaYpsSA--PDfR8uEZz_9Yo9H_6eHw-oO1aYZ0DgLAa4ioJOR6U6e6Ds3s5c-GM-aaE-kRgrbYdWNSy7nZQbqCWcRK6BVV6RA6H_jTlZZpe_6hCAWrt6y9qDaiZTfe7pbc7a5fZHrCETWQSece29CAZMlIgfPW0_VEY" />
-                            <span class="text-md uppercase font-medium text-slate-700 dark:text-slate-300 hidden md:block">
-                                <?= htmlspecialchars($_SESSION['user_name'] ?? 'Guest') ?>
-                            </span>
+                            <a href="/profile" class="flex pointer items-center gap-3">
+                                <img alt="Librarian Profile" class="h-8 w-8 rounded-full object-cover border border-slate-200 dark:border-slate-700" data-alt="Female librarian portrait smiling" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBb7uHxcBfHO05IEbv7NXJOLb5Ba1EZs6y6sGJgdQnnx9qrGzxi3evyU3E3RJPjQs5njWecEvp4ucsEi2BBipW8i_fdiD5iLV0MjpZ1lmulUOaYpsSA--PDfR8uEZz_9Yo9H_6eHw-oO1aYZ0DgLAa4ioJOR6U6e6Ds3s5c-GM-aaE-kRgrbYdWNSy7nZQbqCWcRK6BVV6RA6H_jTlZZpe_6hCAWrt6y9qDaiZTfe7pbc7a5fZHrCETWQSece29CAZMlIgfPW0_VEY" />
+                                <span class="text-md uppercase font-medium text-slate-700 dark:text-slate-300 hidden md:block">
+
+                                    <?= htmlspecialchars($_SESSION['user_name'] ?? 'Guest') ?>
+                                </span>
+                            </a>
+                            <a href="/logout"
+                                onclick="return confirm('Are you sure you want to log out?')"
+                                class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-red-600 bg-red-50 hover:bg-red-100 rounded-lg transition-colors border border-red-100">
+                                <span class="material-symbols-outlined text-[18px]">logout</span>
+                                <span>Logout</span>
+                            </a>
                         </div>
+
                     </div>
                 </div>
             </div>

@@ -5,7 +5,7 @@
         <div class="bg-white dark:bg-slate-900 shadow-sm rounded-xl border border-slate-200 dark:border-slate-800 flex flex-col h-auto">
             <!-- Book Input -->
             <div class="p-6 border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50">
-                <label class="block text-md font-medium text-slate-700 dark:text-slate-300 mb-1">
+                <label class="block text-xl font-medium text-slate-700 dark:text-slate-300 mb-1">
                     Available Books
                 </label>
             </div>
@@ -92,104 +92,28 @@
     <!-- Right Column: Sidebar (4 cols) -->
     <div class="lg:col-span-4 space-y-6">
         <!-- Quick Stats / Shortcuts -->
-        <div class="grid grid-cols-2 gap-4">
-            <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm text-center">
-                <span class="text-xs text-slate-500 dark:text-slate-400 uppercase font-semibold tracking-wider">Today's Circ</span>
-                <div class="mt-1 text-2xl font-bold text-slate-900 dark:text-white">124</div>
-            </div>
-            <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm text-center">
-                <span class="text-xs text-slate-500 dark:text-slate-400 uppercase font-semibold tracking-wider">Overdue</span>
-                <div class="mt-1 text-2xl font-bold text-red-500">12</div>
-            </div>
-        </div>
-        <!-- Recent Activity Sidebar -->
-        <div class="bg-white dark:bg-slate-900 shadow-sm rounded-xl border border-slate-200 dark:border-slate-800 flex flex-col overflow-hidden h-full max-h-[600px]">
-            <div class="p-4 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center bg-slate-50 dark:bg-slate-800">
-                <h3 class="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider">Recent Activity</h3>
-                <button class="text-xs text-primary hover:underline">View Log</button>
-            </div>
-            <div class="flex-1 overflow-auto custom-scrollbar p-0">
-                <ul class="divide-y divide-slate-100 dark:divide-slate-800" role="list">
-                    <!-- History Item 1 -->
-                    <li class="p-4 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-                        <div class="flex space-x-3">
-                            <div class="flex-shrink-0">
-                                <div class="h-8 w-8 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400">
-                                    <span class="material-icons text-sm">outbound</span>
-                                </div>
-                            </div>
-                            <div class="flex-1 space-y-1">
-                                <div class="flex items-center justify-between">
-                                    <h3 class="text-sm font-medium text-slate-900 dark:text-white">Checkout</h3>
-                                    <p class="text-xs text-slate-500 dark:text-slate-400">2m ago</p>
-                                </div>
-                                <p class="text-xs text-slate-500 dark:text-slate-400">James Anderson borrowed 2 items.</p>
-                            </div>
-                        </div>
-                    </li>
-                    <!-- History Item 2 -->
-                    <li class="p-4 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-                        <div class="flex space-x-3">
-                            <div class="flex-shrink-0">
-                                <div class="h-8 w-8 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600 dark:text-green-400">
-                                    <span class="material-icons text-sm">move_to_inbox</span>
-                                </div>
-                            </div>
-                            <div class="flex-1 space-y-1">
-                                <div class="flex items-center justify-between">
-                                    <h3 class="text-sm font-medium text-slate-900 dark:text-white">Return</h3>
-                                    <p class="text-xs text-slate-500 dark:text-slate-400">15m ago</p>
-                                </div>
-                                <p class="text-xs text-slate-500 dark:text-slate-400">Sarah Connor returned "Algorithms 101".</p>
-                            </div>
-                        </div>
-                    </li>
-                    <!-- History Item 3 -->
-                    <li class="p-4 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-                        <div class="flex space-x-3">
-                            <div class="flex-shrink-0">
-                                <div class="h-8 w-8 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center text-red-600 dark:text-red-400">
-                                    <span class="material-icons text-sm">priority_high</span>
-                                </div>
-                            </div>
-                            <div class="flex-1 space-y-1">
-                                <div class="flex items-center justify-between">
-                                    <h3 class="text-sm font-medium text-slate-900 dark:text-white">Fine Paid</h3>
-                                    <p class="text-xs text-slate-500 dark:text-slate-400">1h ago</p>
-                                </div>
-                                <p class="text-xs text-slate-500 dark:text-slate-400">Michael Ross paid $4.50 overdue fine.</p>
-                            </div>
-                        </div>
-                    </li>
-                    <!-- History Item 4 -->
-                    <li class="p-4 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-                        <div class="flex space-x-3">
-                            <div class="flex-shrink-0">
-                                <div class="h-8 w-8 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400">
-                                    <span class="material-icons text-sm">outbound</span>
-                                </div>
-                            </div>
-                            <div class="flex-1 space-y-1">
-                                <div class="flex items-center justify-between">
-                                    <h3 class="text-sm font-medium text-slate-900 dark:text-white">Checkout</h3>
-                                    <p class="text-xs text-slate-500 dark:text-slate-400">2h ago</p>
-                                </div>
-                                <p class="text-xs text-slate-500 dark:text-slate-400">Emily Blunt borrowed 5 items.</p>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
+        <div class="grid grid-cols-1 gap-4">
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-xs font-bold text-slate-500 uppercase tracking-wider">Total Books</p>
+                        <h3 class="text-3xl font-bold mt-2 text-slate-800"><?= $totalBooks?></h3>
+                    </div>
+                    <div class="p-2 bg-blue-50 rounded-lg text-blue-600">
+                        <span class="material-symbols-outlined">menu_book</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-         // Function to close the message
-      function closeFlash() {
-          const el = document.getElementById('flash-message');
-          el.style.opacity = '0';
-          setTimeout(() => el.remove(), 500);
-      }
-      setTimeout(closeFlash, 5000);
+    // Function to close the message
+    function closeFlash() {
+        const el = document.getElementById('flash-message');
+        el.style.opacity = '0';
+        setTimeout(() => el.remove(), 500);
+    }
+    setTimeout(closeFlash, 5000);
 </script>

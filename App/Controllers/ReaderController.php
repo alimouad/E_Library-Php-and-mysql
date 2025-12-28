@@ -6,6 +6,7 @@ use App\Models\Book;
 use App\Models\Borrow;
 use App\Core\Auth;
 use App\Models\User;
+use App\Models\Reader;
 
 class ReaderController
 {
@@ -13,11 +14,14 @@ class ReaderController
     public function index()
 
     {
+        
         Auth::requireLogin();
         $books = Book::fetchaAllBooks();
+        $total_books = Reader::getStats();
         $this->render('User/home', [
             'title' => 'Reader Dashboard',
-            "books" => $books
+            "books" => $books,
+            'totalBooks' => $total_books
         ]);
     }
 
@@ -83,14 +87,8 @@ class ReaderController
 
     public function profile()
     {
-        // 1. Protection: Must be logged in
-        if (!isset($_SESSION['user_id'])) {
-            header('Location: /login');
-            exit;
-        }
+        Auth::requireLogin();
 
-        // 2. Fetch User Data from Model
-        // Assuming you have a getById method in your User model
         $user = User::getById($_SESSION['user_id']);
 
         // 3. Render the view
