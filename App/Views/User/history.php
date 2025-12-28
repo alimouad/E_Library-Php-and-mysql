@@ -1,5 +1,5 @@
 <div class="p-6">
-    <h2 class="text-2xl font-bold mb-4">My Borrowing History</h2>
+    <h2 class="text-xl font-bold mb-4">My Borrowing History</h2>
      <?php if (isset($_SESSION['SUCCESS_MESSAGE'])): ?>
                 <div id="flash-message" class="fixed top-5 right-5 bg-green-100 border border-green-400 text-green-700 px-6 py-4 rounded-lg shadow-xl z-50 flex items-center justify-between min-w-[300px] transition-opacity duration-500">
                     <span><?= htmlspecialchars($_SESSION['SUCCESS_MESSAGE']); ?></span>

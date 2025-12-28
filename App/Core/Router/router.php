@@ -31,6 +31,6 @@ function route($uri)
         }
     } else {
         http_response_code(404);
-        require __DIR__ . '/../../Views/404.php';
+        require __DIR__ . '/../../Views/404/404.php';
     }
 }

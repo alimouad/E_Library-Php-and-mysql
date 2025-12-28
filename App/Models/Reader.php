@@ -1,34 +1,22 @@
 <?php
 
 namespace App\Models;
-use PDO;
 
-class User extends Model
+use Config\Database;
+
+class Reader extends User
 {
-    protected $table = 'users';
-
-    public function findByEmail(string $email)
+    public function __construct($id, $fullName, $email, $password, $role)
     {
-        $sql = "SELECT * FROM {$this->table} WHERE email = :email LIMIT 1";
-        $stmt = $this->query($sql, ['email' => $email]);
-
-        return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+        parent::__construct($fullName, $email, $password, $role, $id);
     }
 
-    public function create(array $data)
+    public static function getStats()
     {
-        $sql = "INSERT INTO {$this->table} (name, email, password)
-            VALUES (:name, :email, :password)";
+        $pdo = Database::getConnection();
 
-        return $this->query($sql, [
-            'name'     => $data['name'], 
-            'email'    => $data['email'],
-            'password' => $data['password']  
-        ])->rowCount() > 0;
-    }
-
-    public function verifyPassword($password, $hashedPassword)
-    {
-        return password_verify($password, $hashedPassword);
+        // Total Books
+        $total_books = $pdo->query("SELECT COUNT(*) FROM books")->fetchColumn();
+        return $total_books;
     }
 }

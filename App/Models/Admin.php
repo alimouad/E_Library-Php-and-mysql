@@ -5,7 +5,6 @@ namespace App\Models;
 use Config\Database;
 
 use PDO;
-use Exception;
 
 class Admin extends User
 {
@@ -35,18 +34,17 @@ class Admin extends User
         $stmt = $pdo->prepare("DELETE FROM users WHERE id = ? AND role != 'admin'");
         return $stmt->execute([$userId]);
     }
-    /**
-     * Get totals for the admin dashboard
-     */
+
+    // get admin stats
     public static function getDashboardStats()
     {
-        $pdo = \Config\Database::getConnection();
+        $pdo = Database::getConnection();
 
         $stats = [];
+        // Total Books
         $stats['total_books'] = $pdo->query("SELECT COUNT(*) FROM books")->fetchColumn();
-        $stats['total_users'] = $pdo->query("SELECT COUNT(*) FROM users WHERE role = 'user'")->fetchColumn();
-        // Example: $stats['active_borrows'] = $pdo->query("SELECT COUNT(*) FROM borrows WHERE status = 'active'")->fetchColumn();
-
+        $stats['active_members'] = $pdo->query("SELECT COUNT(*) FROM users WHERE role = 'reader'")->fetchColumn();
+        $stats['books_issued'] = $pdo->query("SELECT COUNT(*) FROM borrows WHERE returnDate IS NULL")->fetchColumn();
         return $stats;
     }
 }
